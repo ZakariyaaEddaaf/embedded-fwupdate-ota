@@ -12,6 +12,10 @@ code .
 Build the project and flash the firmware to the ESP32 device. Once the firmware is flashed, the device will broadcast an open WiFi network with the SSID FWupdateMe. Connect to this network and open http://192.168.4.1 in your web browser.
 
 
+
+![App Screenshot](https://github.com/ZakariyaaEddaaf/embedded-fwupdate-ota/blob/main/screenshot/fwupdate_http_basic.png?raw=true)
+
+
 ## License
 This project is licensed under the MIT license. See `LICENSE` for details.
 
