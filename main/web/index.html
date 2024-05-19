@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>FWUpdate</title>
+	<style>
+		/* CSS styles from fwupdate.css */
+		* {
+			font-family: "Poppins", sans-serif;
+			margin: 0;
+			padding: 0;
+			box-sizing: border-box;
+		}
+
+		header {
+			background-color: #002f4d;
+			color: white;
+			padding: 12px 30px;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			position: fixed;
+			top: 0;
+			width: 100%;
+			z-index: 999;
+			border-bottom: 2px solid #6AB5FF;
+			/* Ensures the header stays on top */
+		}
+
+		header-1 {
+			background-color: #002f4d;
+			color: white;
+			padding: 12px 30px;
+			text-align: center;
+			position: fixed;
+			top: 0;
+			width: 100%;
+			z-index: 999;
+			border-top: 2px solid #6AB5FF;
+		}
+
+		.logo {
+			font-size: 28px;
+		}
+
+		.restart-btn {
+			background-color: #BFCCD4;
+			/* Green */
+			color: 002F4D;
+			padding: 10px 20px;
+			border: none;
+			border-radius: 5px;
+			cursor: pointer;
+			text-decoration: none;
+			margin-left: 20px;
+			/* Add margin to the left */
+			font-weight: bold;
+			font-size: 12px;
+		}
+
+		.restart-btn:hover {
+			background-color: white;
+			color: #002f4d;
+		}
+
+		body {
+			-webkit-user-select: none;
+			-moz-user-select: none;
+			-ms-user-select: none;
+			user-select: none;
+			overflow-y: hidden;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			background-image: url('evologics.jpg');
+			background-color: #004068;
+			padding-top: 60px;
+			/* Adjust to accommodate the header height */
+		}
+
+		.screen-1 {
+			width: 100%;
+			height: 200px;
+			max-width: 1400px;
+			padding: 2em;
+			border-radius: 10px;
+			background-color: #BFCCD4;
+			text-align: center;
+			margin-bottom: 20px;
+			margin-top: 40px;
+		}
+
+		.screen-2 {
+			width: 100%;
+			height: 300px;
+			max-width: 1400px;
+			padding: 2em;
+			border-radius: 10px;
+			background-color: #BFCCD4;
+			text-align: center;
+			margin-bottom: 20px;
+			margin-top: 20px;
+		}
+
+		.screen-3 {
+			width: 100%;
+			height: 100px;
+			max-width: 1400px;
+			padding: 2em;
+			border-radius: 10px;
+			background-color: #BFCCD4;
+			text-align: center;
+			margin-bottom: 20px;
+			margin-top: 20px;
+		}
+
+		.input-description {
+			color: #004068;
+			font-size: 2.5em;
+			margin-bottom: 0.5em;
+			text-align: left;
+		}
+
+		.input-description span {
+			margin-right: 0;
+		}
+
+		.tiny-text {
+			font-size: 1em;
+			color: #004068;
+			margin-bottom: 0.2em;
+			text-align: left;
+		}
+
+		.input-field {
+			width: 100%;
+			max-width: 400px;
+			margin: 0 auto 1em;
+		}
+
+		.input-field input[type="file"] {
+			outline: none;
+			border: none;
+			width: 100%;
+			padding: 1em;
+			border-radius: 20px;
+			text-align: center;
+		}
+
+		.input-field input[type="file"]:focus {
+			border: 2px solid #a3cbe5;
+		}
+
+		#progress-bar {
+			margin: 0 auto;
+			/* Center horizontally */
+			text-align: center;
+			margin-bottom: 1em;
+		}
+
+		#progress-bar progress {
+			width: 100%;
+			/* Adjusted to ensure the progress bar fills the container */
+			height: 28px;
+			border: none;
+			border-radius: 5px;
+			background-color: #f2f2f2;
+		}
+
+		#progress-bar span {
+			font-size: 0.8em;
+		}
+
+		button.upload-button {
+			background-color: #BFCCD4;
+			/* Green */
+			color: 002F4D;
+			padding: 10px 20px;
+			border: none;
+			border-radius: 5px;
+			cursor: pointer;
+			text-decoration: none;
+			/* margin-left: 20px; */
+			/* Add margin to the left */
+			font-weight: bold;
+			font-size: 12px;
+			width: 73%;
+			margin-top: 12px;
+
+		}
+
+		.upload-button:hover {
+			background-color: white;
+			color: #002f4d;
+		}
+	</style>
+</head>
+
+<body>
+	<header>
+		<img alt="Easy Wireless Update OTA" class="logo">
+		<button class="restart-btn" onclick="restartSystem()">Restart System</button>
+	</header>
+	<div class="screen-1">
+		<div class="input-description">
+			<span style="color: #34ACDE;">FW</span><span style="color: #002f4d;">Update</span>
+		</div>
+
+		<div class="tiny-text">Firmware update for embedded systems</div>
+		<div class="tiny-text">Upload a firmware image (.bin) below or restart the system at the top right
+			corner.
+		</div>
+	</div>
+	<div class="screen-2">
+		<div class="input-field">
+			<input type="file" id="otafile" accept=".bin">
+		</div>
+	</div>
+
+	<div class="screen-3">
+		<div id="progress-bar" class="input-field">
+			<progress value="0" max="100"></progress>
+			<span>0%</span>
+		</div>
+	</div>
+	<button class="upload-button" onclick="startUpload()">Upload</button>
+
+	<!-- Header at the bottom -->
+	<header-1 style="top: auto; bottom: 0;">
+		<img alt="Over The Air Update" class="logo">
+	</header-1>
+
+	<script>
+		function startUpload() {
+			var otafile = document.getElementById("otafile").files;
+
+			if (otafile.length == 0) {
+				alert("No file selected!");
+			} else {
+				document.getElementById("otafile").disabled = true;
+				document.querySelector('.upload-button').disabled = true;
+
+				// Update button text to "Uploading..."
+				document.querySelector('.upload-button').textContent = "Uploading...";
+
+				var file = otafile[0];
+				var xhr = new XMLHttpRequest();
+				xhr.onreadystatechange = function () {
+					if (xhr.readyState == 4) {
+						if (xhr.status == 200) {
+							// Update button text to "Uploaded successfully"
+							document.querySelector('.upload-button').textContent = "Uploaded successfully";
+						} else if (xhr.status == 0) {
+							alert("Server closed the connection abruptly!");
+							location.reload();
+						} else {
+							alert(xhr.status + " Error!\n" + xhr.responseText);
+							location.reload();
+						}
+					}
+				};
+
+				xhr.upload.onprogress = function (e) {
+					var progress = document.querySelector("progress");
+					var percentage = (e.loaded / e.total) * 100;
+					progress.value = percentage;
+					document.querySelector('#progress-bar span').textContent = percentage.toFixed(0) + '%';
+				};
+				xhr.open("POST", "/update", true);
+				xhr.send(file);
+			}
+		}
+
+		function restartSystem() {
+
+		}
+
+	</script>
+</body>
+
+</html>
